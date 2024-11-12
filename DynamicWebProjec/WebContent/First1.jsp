@@ -7,7 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form action="FirstServlet" method="post">
+
+	<form action="Second.jsp">
 		<table>
 			<tr>
 				<th>FirstName</th>
@@ -52,5 +53,6 @@
 
 		</table>
 	</form>
+
 </body>
 </html>
