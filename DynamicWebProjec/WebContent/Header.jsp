@@ -7,11 +7,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<center>
-		<h1>
-			This is Header
-			<hr>
-		</h1>
-	</center>
+	<a href="UserRegistrationCtl">SignUp</a> |
+	<a href="UserListCtl">User List</a> |
+	<a href="index.jsp">Welcome</a>
+	<hr>
 </body>
 </html>
