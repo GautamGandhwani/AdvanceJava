@@ -17,18 +17,17 @@ public class TestUserModel {
 
 	private static void testAdd() throws Exception {
 
-		SimpleDateFormat s = new SimpleDateFormat("YYYY-MM-DD");
+		SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd");
 
 		UserModel m = new UserModel();
 
 		UserBean b = new UserBean();
 
-		b.setId(5);
-		b.setFirstName("Mohit");
-		b.setLastName("Prajapat");
-		b.setLoginId("mohit@gmail.com");
+		b.setFirstName("Arin");
+		b.setLastName("Tomar");
+		b.setLoginId("arin12@gmail.com");
 		b.setPassWord("pass123");
-		b.setAddress("indore");
+		b.setAddress("Indore");
 		b.setDOB(s.parse("2004-07-24"));
 
 		m.add(b);
@@ -68,24 +67,22 @@ public class TestUserModel {
 		UserBean bean = new UserBean();
 		
 	//	bean.setFirstName("Mohit");
-		bean.setLastName("Varma");
+//		bean.setLastName("Varma");
 			
-		List l = m.search(bean);
+		List l = m.search(bean,1,3);
 
 		Iterator it = l.iterator();
-
-		UserBean b = new UserBean();
-
+		
 		while (it.hasNext()) {
-			b = (UserBean) it.next();
+			bean = (UserBean) it.next();
 
-			System.out.print(b.getId());
-			System.out.print("\t" + b.getFirstName());
-			System.out.print("\t" + b.getLastName());
-			System.out.print("\t" + b.getLoginId());
-			System.out.print("\t" + b.getPassWord());
-			System.out.print("\t" + b.getAddress());
-			System.out.println("\t" + b.getDOB());
+			System.out.print(bean.getId());
+			System.out.print("\t" + bean.getFirstName());
+			System.out.print("\t" + bean.getLastName());
+			System.out.print("\t" + bean.getLoginId());
+			System.out.print("\t" + bean.getPassWord());
+			System.out.print("\t" + bean.getAddress());
+			System.out.println("\t" + bean.getDOB());
 		}
 	}
 	private static void testAthenticate() throws Exception {

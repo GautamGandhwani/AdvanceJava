@@ -10,6 +10,27 @@ import java.util.ResourceBundle;
 
 public class UserModel {
 
+	public int nextPK() throws Exception {
+
+		int pk = 0;
+
+		Class.forName("com.mysql.cj.jdbc.Driver");
+
+		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Project", "root", "root");
+
+		PreparedStatement pstmt = conn.prepareStatement("select max(Id) from st_user");
+
+		ResultSet rs = pstmt.executeQuery();
+
+		while (rs.next()) {
+
+			pk = rs.getInt(1);
+
+			System.out.println("Max Id :- " + pk);
+		}
+		return pk + 1;
+	}
+
 	public void add(UserBean bean) throws Exception {
 
 		ResourceBundle rb = ResourceBundle.getBundle("co.in.bundle.system");
@@ -19,7 +40,7 @@ public class UserModel {
 		Connection c = DriverManager.getConnection(rb.getString("url"), rb.getString("username"),
 				rb.getString("password"));
 
-		PreparedStatement p = c.prepareStatement("insert into st_user value(?,?,?,?,?,?,?)");
+		PreparedStatement p = c.prepareStatement("insert into st_user values(?,?,?,?,?,?,?)");
 
 		UserBean existBean = new UserBean();
 
@@ -30,7 +51,7 @@ public class UserModel {
 			System.out.println("LoginId Already exists.");
 		} else {
 
-			p.setInt(1, bean.getId());
+			p.setInt(1, nextPK());
 			p.setString(2, bean.getFirstName());
 			p.setString(3, bean.getLastName());
 			p.setString(4, bean.getLoginId());
@@ -41,7 +62,6 @@ public class UserModel {
 			int i = p.executeUpdate();
 
 			System.out.println("Data Added Successfully :- " + i);
-
 		}
 	}
 
@@ -65,7 +85,6 @@ public class UserModel {
 		int i = p.executeUpdate();
 
 		System.out.println("Data Updated Successfully :- " + i);
-
 	}
 
 	public void delete(int Id) throws Exception {
@@ -83,7 +102,7 @@ public class UserModel {
 		System.out.println("Data Deleted Successfully :- " + i);
 	}
 
-	public List search(UserBean bean) throws Exception {
+	public List search(UserBean bean, int pageNo, int pageSize) throws Exception {
 
 		Class.forName("com.mysql.cj.jdbc.Driver");
 
@@ -91,6 +110,7 @@ public class UserModel {
 
 		StringBuilder sql = new StringBuilder("select * from st_user where 1=1");
 
+//		for Search field 
 		if (bean != null) {
 
 			if (bean.getFirstName() != null && bean.getFirstName().length() > 0) {
@@ -100,6 +120,14 @@ public class UserModel {
 			if (bean.getLastName() != null && bean.getLastName().length() > 0) {
 				sql.append(" and lastName like '" + bean.getLastName() + "'");
 			}
+		}
+
+//		for Pagination
+		if (pageSize > 0) {
+
+			pageNo = (pageNo - 1) * pageSize;
+
+			sql.append(" limit " + pageNo + "," + pageSize);
 		}
 
 		PreparedStatement p = c.prepareStatement(sql.toString());
@@ -113,6 +141,7 @@ public class UserModel {
 		List l = new ArrayList();
 
 		while (rs.next()) {
+
 			b = new UserBean();
 
 			b.setId(rs.getInt(1));
@@ -183,7 +212,6 @@ public class UserModel {
 			b.setPassWord(rs.getString(5));
 			b.setAddress(rs.getString(6));
 			b.setDOB(rs.getDate(7));
-
 		}
 		return b;
 	}

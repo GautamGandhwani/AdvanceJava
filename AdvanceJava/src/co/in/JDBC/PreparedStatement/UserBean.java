@@ -19,9 +19,6 @@ public class UserBean {
 		Id = id;
 	}
 
-	
-	
-
 	public String getFirstName() {
 		return FirstName;
 	}

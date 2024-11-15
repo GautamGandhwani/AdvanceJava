@@ -10,8 +10,8 @@ public class TestMarkSheetModel {
 //		testAdd();
 //		testUpdate();
 //		testDelete();
-//		testSearch();
-		testMeritList();
+		testSearch();
+//		testMeritList();
 	}
 
 	private static void testAdd() throws Exception {
@@ -19,12 +19,12 @@ public class TestMarkSheetModel {
 		MarkSheetModel model = new MarkSheetModel();
 
 		MarkSheetBean bean = new MarkSheetBean();
-
-		bean.setRollNo(1011);
-		bean.setName("Sumit");
-		bean.setPhysics(75);
-		bean.setChemistry(59);
-		bean.setMaths(53);
+		
+		bean.setRollNo(1012);
+		bean.setName("Raj");
+		bean.setPhysics(55);
+		bean.setChemistry(69);
+		bean.setMaths(56);
 
 		model.add(bean);
 	}
@@ -49,7 +49,7 @@ public class TestMarkSheetModel {
 
 		MarkSheetModel model = new MarkSheetModel();
 
-		model.delete(11);
+		model.delete(12);
 	}
 
 	private static void testSearch() throws Exception {
@@ -75,26 +75,26 @@ public class TestMarkSheetModel {
 		}
 	}
 
-	private static void testMeritList() throws Exception {
-		
-		MarkSheetModel model = new MarkSheetModel();
-		
-		MarkSheetBean bean = new MarkSheetBean();
-		
-		List list = model.search(bean);
-		
-		Iterator it = list.iterator();
-		
-		while (it.hasNext()) {
-			
-			bean = (MarkSheetBean) it.next();
-			
-			System.out.print(bean.getId());
-			System.out.print("\t"+bean.getRoll_no());
-			System.out.print("\t"+bean.getName());
-			System.out.print("\t"+bean.getPhysics());
-			System.out.print("\t"+bean.getChemistry());
-			System.out.println("\t"+bean.getMaths());
-		}	
-	}
+//	private static void testMeritList() throws Exception {
+//		
+//		MarkSheetModel model = new MarkSheetModel();
+//		
+//		MarkSheetBean bean = new MarkSheetBean();
+//		
+//		List list = model.search(bean);
+//		
+//		Iterator it = list.iterator();
+//		
+//		while (it.hasNext()) {
+//			
+//			bean = (MarkSheetBean) it.next();
+//			
+//			System.out.print(bean.getId());
+//			System.out.print("\t"+bean.getRoll_no());
+//			System.out.print("\t"+bean.getName());
+//			System.out.print("\t"+bean.getPhysics());
+//			System.out.print("\t"+bean.getChemistry());
+//			System.out.println("\t"+bean.getMaths());
+//		}	
+//	}
 }
