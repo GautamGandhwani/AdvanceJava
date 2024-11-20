@@ -11,37 +11,37 @@
 	<form action="Second.jsp">
 		<table>
 			<tr>
-				<th>FirstName</th>
+				<th>First Name :- </th>
 				<td><input type="text" name="firstName"
 					placeholder="Enter First Name"></td>
 			</tr>
 
 			<tr>
-				<th>LastName</th>
+				<th>Last Name :- </th>
 				<td><input type="text" name="lastName"
 					placeholder="Enter Last Name"></td>
 			</tr>
 
 			<tr>
-				<th>LoginId</th>
+				<th>Login Id :- </th>
 				<td><input type="email" name="loginId"
 					placeholder="Enter Login Id"></td>
 			</tr>
 
 			<tr>
-				<th>PassWord</th>
+				<th>PassWord :- </th>
 				<td><input type="password" name="passWord"
 					placeholder="Enter Pass Word"></td>
 			</tr>
 
 			<tr>
-				<th>Address</th>
+				<th>Address :- </th>
 				<td><input type="text" name="address"
 					placeholder="Enter Adderss"></td>
 			</tr>
 
 			<tr>
-				<th>DateOfBirth</th>
+				<th>Date Of Birth :- </th>
 				<td><input type="date" name="dob"
 					placeholder="Enter Date Of Birth"></td>
 			</tr>

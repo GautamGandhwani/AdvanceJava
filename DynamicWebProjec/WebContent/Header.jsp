@@ -1,3 +1,4 @@
+<%@page import="co.in.Bean.UserBean"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -7,9 +8,27 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<a href="UserRegistrationCtl">SignUp</a> |
+	<%
+		UserBean userBean = (UserBean) session.getAttribute("user");
+	%>
+	<%
+		if (userBean != null) {
+	%>
+	<h2><%="Hi,  " + userBean.getFirstName()%></h2>
+	<a href="UserCtl">Add User</a> |
 	<a href="UserListCtl">User List</a> |
-	<a href="index.jsp">Welcome</a>
+	<a href="WelcomeCtl">Welcome</a> |
+	<a href="LoginCtl?operation=logout">Logout </a>
+	<%
+		} else {
+	%>
+	<h2>Hi, Guest</h2>
+	<a href="UserRegistrationCtl">SignUp</a> |
+	<a href="LoginCtl">Signin</a> |
+	<a href="WelcomeCtl">Welcome</a>
+	<%
+		}
+	%>
 	<hr>
 </body>
 </html>

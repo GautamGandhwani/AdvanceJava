@@ -1,6 +1,7 @@
 package co.in.Controller;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -24,7 +25,7 @@ public class UserListCtl extends HttpServlet {
 		UserBean bean = new UserBean();
 
 		try {
-			List list = model.search(bean, 1, 5);
+			List list = model.search(bean, 0, 0);
 			request.setAttribute("list", list);
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -38,11 +39,14 @@ public class UserListCtl extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
 		String op = request.getParameter("operation");
 
 		System.out.println("Operation = " + op);
 
 		UserModel model = new UserModel();
+		UserBean bean = new UserBean();
 
 		String[] ids = request.getParameterValues("ids");
 
@@ -56,6 +60,27 @@ public class UserListCtl extends HttpServlet {
 				}
 			}
 		}
-		response.sendRedirect("UserListCtl");
+
+		try {
+			if (op.equals("search")) {
+
+				bean.setFirstName(request.getParameter("firstName"));
+				bean.setLastName(request.getParameter("lastName"));
+				bean.setLoginId(request.getParameter("loginId"));
+				bean.setAddress(request.getParameter("address"));
+				
+				if (request.getParameter("dob") != "") {
+					bean.setDob(sdf.parse(request.getParameter("dob")));
+				}
+			}
+
+			List list = model.search(bean, 0, 0);
+			request.setAttribute("list", list);
+
+		} catch (Exception e) {
+
+		}
+		RequestDispatcher rd = request.getRequestDispatcher("UserListView.jsp");
+		rd.forward(request, response);
 	}
 }

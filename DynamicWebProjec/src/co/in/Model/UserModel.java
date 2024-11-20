@@ -1,6 +1,7 @@
 package co.in.Model;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -46,7 +47,7 @@ public class UserModel {
 		existBean = findByLoginId(bean.getLoginId());
 
 		if (existBean != null) {
-			System.out.println("LoginId Already exists.");
+			System.out.println("LoginId Already exists." + "\n");
 		} else {
 
 			pstmt.setInt(1, nextPk());
@@ -59,7 +60,7 @@ public class UserModel {
 
 			int i = pstmt.executeUpdate();
 
-			System.out.println("Data Added Successfully :- " + i);
+			System.out.println("Data Added Successfully :- " + i + "\n");
 
 		}
 	}
@@ -81,7 +82,7 @@ public class UserModel {
 
 		int i = pstmt.executeUpdate();
 
-		System.out.println("Data Updated Successfully :- " + i);
+		System.out.println("Data Updated Successfully :- " + i + "\n");
 
 	}
 
@@ -95,7 +96,7 @@ public class UserModel {
 
 		int i = pstmt.executeUpdate();
 
-		System.out.println("Data Deleted Successfully :- " + i);
+		System.out.println("Data Deleted Successfully :- " + i + "\n");
 	}
 
 	public List search(UserBean bean, int pageNo, int pageSize) throws Exception {
@@ -113,8 +114,21 @@ public class UserModel {
 			if (bean.getLastName() != null && bean.getLastName().length() > 0) {
 				sql.append(" and lastName like '" + bean.getLastName() + "'");
 			}
+
+			if (bean.getLoginId() != null && bean.getLoginId().length() > 0) {
+				sql.append(" and loginId like '" + bean.getLoginId() + "'");
+			}
+
+			if (bean.getAddress() != null && bean.getAddress().length() > 0) {
+				sql.append(" and address like '" + bean.getAddress() + "'");
+			}
+
+			if (bean.getDob() != null && bean.getDob().getTime() > 0) {
+				Date d = new Date(bean.getDob().getTime());
+				sql.append(" and DOB like '" + d + "'");
+			}
 		}
-		
+
 		if (pageSize > 0) {
 
 			pageNo = (pageNo - 1) * pageSize;
@@ -201,5 +215,35 @@ public class UserModel {
 			bean.setDob(rs.getDate(7));
 		}
 		return bean;
+	}
+
+	public UserBean findById(int id) throws Exception {
+
+		Connection conn = JDBCDataSource.getConnection();
+
+		PreparedStatement pstmt = conn.prepareStatement("select * from st_user where id = ?");
+
+		pstmt.setInt(1, id);
+
+		ResultSet rs = pstmt.executeQuery();
+
+		UserBean bean = null;
+
+		while (rs.next()) {
+
+			bean = new UserBean();
+
+			bean.setId(rs.getInt(1));
+			bean.setFirstName(rs.getString(2));
+			bean.setLastName(rs.getString(3));
+			bean.setLoginId(rs.getString(4));
+			bean.setPassWord(rs.getString(5));
+			bean.setAddress(rs.getString(6));
+			bean.setDob(rs.getDate(7));
+
+		}
+
+		return bean;
+
 	}
 }
