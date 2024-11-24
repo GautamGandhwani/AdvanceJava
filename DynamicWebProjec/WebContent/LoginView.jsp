@@ -9,51 +9,49 @@
 </head>
 <body>
 	<%@ include file="Header.jsp"%>
-	<%
-		UserBean bean = (UserBean) request.getAttribute("bean");
-	%>
+
 	<center>
 		<form action="LoginCtl" method="post">
 			<br> <br> <br>
 
 			<%
 				String msg = (String) request.getAttribute("msg");
+				String err = (String) request.getAttribute("err");
 			%>
 
 			<%
 				if (msg != null) {
 			%>
 
-			<span><%=msg%></span>
+			<span style="color: green"><%=msg%></span>
+
+			<%
+				}
+			%>
+			<%
+				if (err != null) {
+			%>
+
+			<span style="color: red"><%=err%></span>
 
 			<%
 				}
 			%>
 
-			<%
-				if (bean != null) {
-			%>
-			<h1>Login</h1>
-			<%
-				} else {
-			%>
+
 			<h1>LogIn</h1>
-			<%
-				}
-			%>
+
 			<table>
 
 				<tr>
-					<th>Login Id :-</th>
+					<th>Login Id :</th>
 					<td><input type="email" name="loginId"
-						value="<%=bean != null ? bean.getLoginId() : ""%>"
 						placeholder="Enter Login Id"></td>
 				</tr>
 
 				<tr>
-					<th>PassWord :-</th>
+					<th>PassWord :</th>
 					<td><input type="password" name="passWord"
-						value="<%=bean != null ? bean.getPassWord() : ""%>"
 						placeholder="Enter Pass Word"></td>
 				</tr>
 

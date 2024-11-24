@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import co.in.Bean.UserBean;
 import co.in.Model.UserModel;
 
-@WebServlet("/UserListCtl")
+@WebServlet("/UserListCtl.do")
 public class UserListCtl extends HttpServlet {
 
 	@Override
@@ -25,10 +25,9 @@ public class UserListCtl extends HttpServlet {
 		UserBean bean = new UserBean();
 
 		try {
-			List list = model.search(bean, 0, 0);
+			List list = model.search(bean, 1, 5);
 			request.setAttribute("list", list);
 		} catch (Exception e) {
-			// TODO: handle exception
 			e.printStackTrace();
 		}
 		RequestDispatcher rd = request.getRequestDispatcher("UserListView.jsp");
@@ -42,7 +41,10 @@ public class UserListCtl extends HttpServlet {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
 		String op = request.getParameter("operation");
-
+		
+		int pageNo = 1;
+		int pageSize = 5;
+		
 		System.out.println("Operation = " + op);
 
 		UserModel model = new UserModel();
@@ -73,9 +75,24 @@ public class UserListCtl extends HttpServlet {
 					bean.setDob(sdf.parse(request.getParameter("dob")));
 				}
 			}
+			
+			if (op.equals("next")) {
+				
+				pageNo = Integer.parseInt(request.getParameter("pageNo"));
+				
+				pageNo++;
+			}
+			
+			if (op.equals("previous")) {
+				
+				pageNo = Integer.parseInt(request.getParameter("pageNo"));
+				
+				pageNo--;
+			}
 
-			List list = model.search(bean, 0, 0);
+			List list = model.search(bean, pageNo, pageSize);
 			request.setAttribute("list", list);
+			request.setAttribute("pageNo", pageNo);
 
 		} catch (Exception e) {
 

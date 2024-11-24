@@ -11,30 +11,43 @@
 </head>
 <body>
 	<%@ include file="Header.jsp"%>
+
 	<%
 		List list = (List) request.getAttribute("list");
+		int pageNo = 1;
 	%>
-	<form action="UserListCtl" method="post">
+	<%
+		if (request.getAttribute("pageNo") != null) {
+	%>
+	<%
+		pageNo = (int) request.getAttribute("pageNo");
+	%>
+	<%
+		}
+	%>
+
+	<form action="UserListCtl.do" method="post"
+		style="background: lightyellow">
 		<h1 align="center">User List</h1>
 
 		<table>
-			<th>First Name :-</th>
+			<th>First Name :</th>
 			<td><input type="text" name="firstName"
 				placeholder="Enter First Name"></td> &nbsp;
 
-			<th>Last Name :-</th>
+			<th>Last Name :</th>
 			<td><input type="text" name="lastName"
 				placeholder="Enter Last Name"></td> &nbsp;
 
-			<th>Login Id :-</th>
+			<th>Login Id :</th>
 			<td><input type="email" name="loginId"
 				placeholder="Enter Login Id"></td> &nbsp;
 
-			<th>Address :-</th>
+			<th>Address :</th>
 			<td><input type="text" name="address"
 				placeholder="Enter Address"></td> &nbsp;
 
-			<th>DOB</th>
+			<th>DOB :</th>
 			<td><input type="date" name="dob"></td>
 
 			<th></th>
@@ -43,9 +56,10 @@
 
 		<br>
 
-		<table border="1px" width="100%" >
-			<tr style="background: skyblue">
+		<table border="5px" width="100%">
+			<tr bgcolor="skyblue">
 				<th>Delete</th>
+				<th>S.No</th>
 				<th>First Name</th>
 				<th>Last Name</th>
 				<th>Login Id</th>
@@ -59,24 +73,33 @@
 				while (it.hasNext()) {
 					UserBean bean = (UserBean) it.next();
 			%>
-			<tr align="center">
+			<tr align="center" bgcolor="grey" style="color: white">
 				<td><input type="checkbox" name="ids" value="<%=bean.getId()%>"></td>
+				<td><%=bean.getId()%>
 				<td><%=bean.getFirstName()%></td>
 				<td><%=bean.getLastName()%></td>
 				<td><%=bean.getLoginId()%></td>
 				<td><%=bean.getAddress()%></td>
 				<td><%=bean.getDob()%></td>
-				<td><a href="UserCtl?id=<%=bean.getId()%>">Edit</a></td>
+				<td><a href="UserCtl.do?id=<%=bean.getId()%>">Edit</a></td>
 			</tr>
 			<%
 				}
 			%>
 		</table>
-		<table>
+		<br>
+		<table width=100%>
 			<tr>
-				<input type="submit" name="operation" value="delete">
+				<td align="left"><input type="submit" name="operation"
+					value="previous" <%=(pageNo == 1) ? "disabled" : ""%>></td>
+
+				<td><input type="submit" name="operation" value="delete"></td>
+
+				<td align="right"><input type="submit" name="operation"
+					value="next" <%=(list.size() == 0) ? "disabled" : ""%>></td>
 			</tr>
 		</table>
+		<input type="hidden" name="pageNo" value="<%=pageNo%>">
 	</form>
 	<%@ include file="Footer.jsp"%>
 </body>

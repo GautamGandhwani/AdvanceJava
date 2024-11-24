@@ -21,15 +21,17 @@ public class LoginCtl extends HttpServlet {
 			throws ServletException, IOException {
 
 		String op = request.getParameter("operation");
-		
+		System.out.println("Operation = " + op);
+
 		HttpSession session = request.getSession();
-		
+
 		if (op != null) {
 			session.invalidate();
-		}
-		
-		response.sendRedirect("LoginView.jsp");
 
+			request.setAttribute("msg", "Usre Logout Successfully");
+		}
+		RequestDispatcher rd = request.getRequestDispatcher("LoginView.jsp");
+		rd.forward(request, response);
 	}
 
 	@Override
@@ -37,34 +39,36 @@ public class LoginCtl extends HttpServlet {
 			throws ServletException, IOException {
 
 		String op = request.getParameter("operation");
-		
+
+		System.out.println("Operation = " + op);
+
 		UserModel model = new UserModel();
 		UserBean bean = new UserBean();
-		
+
 		HttpSession session = request.getSession();
-		
+
 		String loginId = request.getParameter("loginId");
 		String passWord = request.getParameter("passWord");
-		
+
 		if (op.equals("SignIn")) {
 			try {
 				bean = model.authenticate(loginId, passWord);
-				
+
 				if (bean != null) {
 					session.setAttribute("user", bean);
-					
+
 					RequestDispatcher rd = request.getRequestDispatcher("Welcome.jsp");
 					rd.forward(request, response);
 				} else {
-					request.setAttribute("msg", "Invalid LoginId or Password");
+					request.setAttribute("err", "Invalid LoginId or Password");
 					RequestDispatcher rd = request.getRequestDispatcher("LoginView.jsp");
 					rd.forward(request, response);
 				}
-				
+
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			
+
 		}
 	}
 }

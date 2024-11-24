@@ -14,15 +14,17 @@
 	<%
 		if (userBean != null) {
 	%>
-	<h2><%="Hi,  " + userBean.getFirstName()%></h2>
-	<a href="UserCtl">Add User</a> |
-	<a href="UserListCtl">User List</a> |
+	<h2 align="right"><%="Hi,  " + userBean.getFirstName()%></h2>
+	<a href="UserCtl.do">Add User</a> |
+	<a href="UserListCtl.do">User List</a> |
+	<a href="MarkSheetCtl.do">Add MarkSheet</a> |
+	<a href="MarkSheetListCtl.do">MarkSheet List</a> |
 	<a href="WelcomeCtl">Welcome</a> |
 	<a href="LoginCtl?operation=logout">Logout </a>
 	<%
 		} else {
 	%>
-	<h2>Hi, Guest</h2>
+	<h2 align="right">Hi, Guest</h2>
 	<a href="UserRegistrationCtl">SignUp</a> |
 	<a href="LoginCtl">Signin</a> |
 	<a href="WelcomeCtl">Welcome</a>

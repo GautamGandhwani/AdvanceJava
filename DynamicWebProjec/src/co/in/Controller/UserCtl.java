@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import co.in.Bean.UserBean;
 import co.in.Model.UserModel;
 
-@WebServlet("/UserCtl")
+@WebServlet("/UserCtl.do")
 public class UserCtl extends HttpServlet {
 
 	@Override
@@ -73,18 +73,17 @@ public class UserCtl extends HttpServlet {
 
 				model.add(bean);
 				request.setAttribute("bean", bean);
-				request.setAttribute("msg", "User Added Successfully"+"\n");
-				
-			} else if(op.equals("update")){
+				request.setAttribute("msg", "User Added Successfully" + "\n");
+
+			} else if (op.equals("update")) {
 
 				bean.setId(Integer.parseInt(request.getParameter("id")));
 				request.setAttribute("bean", bean);
 				model.update(bean);
-				request.setAttribute("msg", "User Updateed Successfully"+"\n");
+				request.setAttribute("msg", "User Updateed Successfully" + "\n");
 			}
 			RequestDispatcher rd = request.getRequestDispatcher("UserView.jsp");
 			rd.forward(request, response);
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

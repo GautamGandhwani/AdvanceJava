@@ -14,7 +14,7 @@
 		UserBean bean = (UserBean) request.getAttribute("bean");
 	%>
 	<center>
-		<form action="UserCtl" method="post">
+		<form action="UserCtl.do" method="post">
 			<br> <br> <br>
 
 			<%
@@ -25,7 +25,7 @@
 				if (msg != null) {
 			%>
 
-			<span><%=msg%></span>
+			<span style="color: green"><%=msg%></span>
 
 			<%
 				}
@@ -46,42 +46,42 @@
 				<td><input type="hidden" name="id"
 					value="<%=bean != null ? bean.getId() : ""%>"></td>
 				<tr>
-					<th>First Name :- </th>
+					<th>First Name :</th>
 					<td><input type="text" name="firstName"
 						value="<%=bean != null ? bean.getFirstName() : ""%>"
 						placeholder="Enter First Name"></td>
 				</tr>
 
 				<tr>
-					<th>Last Name :- </th>
+					<th>Last Name :</th>
 					<td><input type="text" name="lastName"
 						value="<%=bean != null ? bean.getLastName() : ""%>"
 						placeholder="Enter Last Name"></td>
 				</tr>
 
 				<tr>
-					<th>Login Id :- </th>
+					<th>Login Id :</th>
 					<td><input type="email" name="loginId"
 						value="<%=bean != null ? bean.getLoginId() : ""%>"
 						placeholder="Enter Login Id"></td>
 				</tr>
 
 				<tr>
-					<th>PassWord :- </th>
+					<th>PassWord :</th>
 					<td><input type="password" name="passWord"
 						value="<%=bean != null ? bean.getPassWord() : ""%>"
 						placeholder="Enter Pass Word"></td>
 				</tr>
 
 				<tr>
-					<th>Address :- </th>
+					<th>Address :</th>
 					<td><input type="text" name="address"
 						value="<%=bean != null ? bean.getAddress() : ""%>"
 						placeholder="Enter Address"></td>
 				</tr>
 
 				<tr>
-					<th>DOB :- </th>
+					<th>DOB :</th>
 					<td><input type="date" name="dob"
 						value="<%=bean != null ? bean.getDob() : ""%>"
 						placeholder="Enter Date of Birth"></td>

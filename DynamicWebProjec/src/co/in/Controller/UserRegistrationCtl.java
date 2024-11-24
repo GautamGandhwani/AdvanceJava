@@ -43,19 +43,25 @@ public class UserRegistrationCtl extends HttpServlet {
 
 		try {
 
-			bean.setFirstName(firstName);
-			bean.setLastName(lastName);
-			bean.setLoginId(loginId);
-			bean.setPassWord(passWord);
-			bean.setAddress(address);
-			bean.setDob(sdf.parse(dob));
+			if (model.findByLoginId(loginId) != null) {
 
-			model.add(bean);
-			
-			request.setAttribute("msg", "User Registration Successfully.");
-			
+				request.setAttribute("err", "Login Id Already Exist...");
+
+			} else {
+
+				bean.setFirstName(firstName);
+				bean.setLastName(lastName);
+				bean.setLoginId(loginId);
+				bean.setPassWord(passWord);
+				bean.setAddress(address);
+				bean.setDob(sdf.parse(dob));
+
+				model.add(bean);
+
+				request.setAttribute("msg", "User Registration Successfully");
+			}
 			RequestDispatcher rd = request.getRequestDispatcher("UserRegistrationView.jsp");
-			
+
 			rd.forward(request, response);
 
 		} catch (Exception e) {
