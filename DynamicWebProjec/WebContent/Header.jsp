@@ -19,6 +19,10 @@
 	<a href="UserListCtl.do">User List</a> |
 	<a href="MarkSheetCtl.do">Add MarkSheet</a> |
 	<a href="MarkSheetListCtl.do">MarkSheet List</a> |
+	<a href="StudentCtl.do">Add Student</a> |
+	<a href="StudentListCtl.do">Student List</a> |
+	<a href="CollegeCtl.do">Add College</a> |
+	<a href="CollegeListCtl.do">College List</a> |
 	<a href="WelcomeCtl">Welcome</a> |
 	<a href="LoginCtl?operation=logout">Logout </a>
 	<%

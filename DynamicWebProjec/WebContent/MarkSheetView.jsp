@@ -39,7 +39,12 @@
 				}
 			%>
 			<table>
-				
+
+				<tr>
+					<td><input type="hidden" name="id"
+						value="<%=bean != null ? bean.getId() : ""%>"></td>
+				</tr>
+
 				<tr>
 					<th>Roll No :</th>
 					<td><input type="text" name="rollno"
@@ -78,6 +83,7 @@
 				<tr>
 					<th></th>
 					<td><input type="submit" name="operation"
+					
 						value="<%=bean != null ? "update" : "save"%>"></td>
 				</tr>
 			</table>

@@ -64,13 +64,17 @@ public class MarkSheetCtl extends HttpServlet {
 			bean.setChemistry(Integer.parseInt(chemistry));
 			bean.setMaths(Integer.parseInt(maths));
 
-			if (op.equals("save")) {
+			if (model.findByRollNo(Integer.parseInt(rollNo)) != null) {
+				request.setAttribute("msg", "Roll No Already Exised...");
+			} else if (op.equals("save")) {
 				model.add(bean);
 				request.setAttribute("bean", bean);
 				request.setAttribute("msg", "Add Data Successfully");
-			} else if (op.equals("update")) {
+			}
 
-				bean.setRollNo(Integer.parseInt(rollNo));
+			if (op.equals("update")) {
+
+				bean.setId(Integer.parseInt(request.getParameter("id")));
 				model.update(bean);
 				request.setAttribute("bean", bean);
 				request.setAttribute("msg", "Update Data Successfully");

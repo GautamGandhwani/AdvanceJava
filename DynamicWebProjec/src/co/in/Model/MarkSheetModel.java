@@ -100,8 +100,24 @@ public class MarkSheetModel {
 
 		if (bean != null) {
 
+			if (bean.getRollNo() != 0 && bean.getRollNo() > 0) {
+				sql.append(" and rollno = " + bean.getRollNo());
+			}
+
 			if (bean.getName() != null && bean.getName().length() > 0) {
-				sql.append(bean.getName().length());
+				sql.append(" and name like '" + bean.getName() + "'");
+			}
+
+			if (bean.getPhysics() != 0 && bean.getPhysics() > 0) {
+				sql.append(" and physics = " + bean.getPhysics());
+			}
+
+			if (bean.getChemistry() != 0 && bean.getChemistry() > 0) {
+				sql.append(" and chemistry = " + bean.getChemistry());
+			}
+
+			if (bean.getMaths() != 0 && bean.getMaths() > 0) {
+				sql.append(" and maths = " + bean.getMaths());
 			}
 		}
 
@@ -111,6 +127,8 @@ public class MarkSheetModel {
 		}
 
 		PreparedStatement pstmt = conn.prepareStatement(sql.toString());
+
+		System.out.println("SQL = " + sql.toString());
 
 		ResultSet rs = pstmt.executeQuery();
 
@@ -156,5 +174,4 @@ public class MarkSheetModel {
 		}
 		return bean;
 	}
-
 }

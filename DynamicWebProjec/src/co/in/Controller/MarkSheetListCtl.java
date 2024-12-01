@@ -24,7 +24,7 @@ public class MarkSheetListCtl extends HttpServlet {
 		MarkSheetBean bean = new MarkSheetBean();
 
 		try {
-			List list = model.search(bean, 0, 0);
+			List list = model.search(bean, 1, 5);
 			request.setAttribute("list", list);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -38,6 +38,10 @@ public class MarkSheetListCtl extends HttpServlet {
 			throws ServletException, IOException {
 
 		String op = request.getParameter("operation");
+
+		int pageNo = 1;
+		int pageSize = 5;
+
 		System.out.println("Operatin = " + op);
 
 		MarkSheetModel model = new MarkSheetModel();
@@ -56,8 +60,47 @@ public class MarkSheetListCtl extends HttpServlet {
 					}
 				}
 			}
-			List list = model.search(bean, 0, 0);
+
+			if (op.equals("search")) {
+				if (request.getParameter("rollNo") != "") {
+					bean.setRollNo(Integer.parseInt(request.getParameter("rollNo")));
+				}
+
+				if (request.getParameter("name") != "") {
+					bean.setName(request.getParameter("name"));
+				}
+				if (request.getParameter("physics") != "") {
+					bean.setPhysics(Integer.parseInt(request.getParameter("physics")));
+				}
+
+				if (request.getParameter("chemistry") != "") {
+					bean.setChemistry(Integer.parseInt(request.getParameter("chemistry")));
+				}
+
+				if (request.getParameter("maths") != "") {
+					bean.setMaths(Integer.parseInt(request.getParameter("maths")));
+				}
+			}
+
+			if (op.equals("next")) {
+
+				pageNo = Integer.parseInt(request.getParameter("pageNo"));
+
+				pageNo++;
+			}
+
+			if (op.equals("previous")) {
+
+				pageNo = Integer.parseInt(request.getParameter("pageNo"));
+
+				pageNo--;
+			}
+
+			List list = model.search(bean, pageNo, pageSize);
+
 			request.setAttribute("list", list);
+
+			request.setAttribute("pageNo", pageNo);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

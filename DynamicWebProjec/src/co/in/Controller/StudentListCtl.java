@@ -11,26 +11,28 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import co.in.Bean.UserBean;
-import co.in.Model.UserModel;
+import co.in.Bean.StudentBean;
+import co.in.Model.StudentModel;
 
-@WebServlet("/UserListCtl.do")
-public class UserListCtl extends HttpServlet {
+@WebServlet("/StudentListCtl.do")
+public class StudentListCtl extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		UserModel model = new UserModel();
-		UserBean bean = new UserBean();
+		StudentBean bean = new StudentBean();
+		StudentModel model = new StudentModel();
 
 		try {
+
 			List list = model.search(bean, 1, 5);
 			request.setAttribute("list", list);
 		} catch (Exception e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		RequestDispatcher rd = request.getRequestDispatcher("UserListView.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("StudentListView.jsp");
 		rd.forward(request, response);
 	}
 
@@ -41,35 +43,33 @@ public class UserListCtl extends HttpServlet {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
 		String op = request.getParameter("operation");
-
+		System.out.println("Operation = " + op);
 		int pageNo = 1;
 		int pageSize = 5;
 
-		System.out.println("Operation = " + op);
-
-		UserModel model = new UserModel();
-		UserBean bean = new UserBean();
+		StudentBean bean = new StudentBean();
+		StudentModel model = new StudentModel();
 
 		String[] ids = request.getParameterValues("ids");
 
-		if (op.equals("delete")) {
-
-			for (String id : ids) {
-				try {
-					model.delete(Integer.parseInt(id));
-				} catch (Exception e) {
-					e.printStackTrace();
+		try {
+			if (op.equals("delete")) {
+				for (String id : ids) {
+					try {
+						model.delete(Integer.parseInt(id));
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			}
-		}
 
-		try {
 			if (op.equals("search")) {
-
 				bean.setFirstName(request.getParameter("firstName"));
 				bean.setLastName(request.getParameter("lastName"));
-				bean.setLoginId(request.getParameter("loginId"));
-				bean.setAddress(request.getParameter("address"));
+				bean.setCollageName(request.getParameter("collageName"));
+				bean.setEmail(request.getParameter("email"));
+				bean.setMobileNo(request.getParameter("mobileNo"));
 
 				if (request.getParameter("dob") != "") {
 					bean.setDob(sdf.parse(request.getParameter("dob")));
@@ -93,11 +93,11 @@ public class UserListCtl extends HttpServlet {
 			List list = model.search(bean, pageNo, pageSize);
 			request.setAttribute("list", list);
 			request.setAttribute("pageNo", pageNo);
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		RequestDispatcher rd = request.getRequestDispatcher("UserListView.jsp");
+
+		RequestDispatcher rd = request.getRequestDispatcher("StudentListView.jsp");
 		rd.forward(request, response);
 	}
 }

@@ -6,7 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import co.in.Bean.UserBean;
 import co.in.Util.JDBCDataSource;

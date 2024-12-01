@@ -14,13 +14,48 @@
 	<%@include file="Header.jsp"%>
 	<%
 		List list = (List) request.getAttribute("list");
+		int pageNo = 1;
 	%>
-	<form action="MarkSheetListCtl.do" method="post">
-		<h1 align="center">MarkSheet List</h1>
+	<%
+		if (request.getAttribute("pageNo") != null) {
+	%>
+	<%
+		pageNo = (int) request.getAttribute("pageNo");
+	%>
+	<%
+		}
+	%>
 
+	<form action="MarkSheetListCtl.do" method="post"
+		style="background-color: skyblue">
+		<h1 align="center">MarkSheet List</h1>
+		<table>
+
+			<th>Roll No :</th>
+			<td><input type="text" name="rollNo" placeholder="Enter Roll No"></td>&nbsp;
+
+			<th>Name :</th>
+			<td><input type="text" name="name" placeholder="Enter Name"></td>&nbsp;
+
+			<th>Physics :</th>
+			<td><input type="text" name="physics"
+				placeholder="Enter Physics Marks"></td>&nbsp;
+
+			<th>Chemistry :</th>
+			<td><input type="text" name="chemistry"
+				placeholder="Enter Chemistry Marks"></td>&nbsp;
+
+			<th>Maths :</th>
+			<td><input type="text" name="maths"
+				placeholder="Enter Maths Marks"></td>&nbsp;
+
+			<td><input type="submit" name="operation" value="search"></td>
+		</table>
+		<br>
 		<table border="1px" width="100%">
 			<tr bgcolor="grey" style="color: white">
 				<th>Delete</th>
+				<th>S. No</th>
 				<th>Roll No</th>
 				<th>Name</th>
 				<th>Physics</th>
@@ -35,23 +70,31 @@
 			%>
 			<tr align="center">
 				<td><input type="checkbox" name="ids" value="<%=bean.getId()%>"></td>
+				<td><%=bean.getId()%></td>
 				<td><%=bean.getRollNo()%></td>
 				<td><%=bean.getName()%></td>
 				<td><%=bean.getPhysics()%></td>
 				<td><%=bean.getChemistry()%></td>
 				<td><%=bean.getMaths()%></td>
-				<td><a href="MarkSheetCtl.do?rollNo=<%=bean.getRollNo()%>">Edit</a> <%
- 	}
- %>
+				<td><a href="MarkSheetCtl.do?rollNo=<%=bean.getRollNo()%>">Edit</a>
+					<%
+						}
+					%>
 			</tr>
 		</table>
-		
-		
-		<table>
+		<br>
+		<table width="100%">
 			<tr>
+				<td align="left"><input type="submit" name="operation"
+					value="previous" <%=(pageNo == 1) ? "disabled" : ""%>></td>
+
 				<td><input type="submit" name="operation" value="delete"></td>
+
+				<td align="right"><input type="submit" name="operation"
+					value="next" <%=(list.size() == 0) ? "disabled" : ""%>></td>
 			</tr>
 		</table>
+		<input type="hidden" name="pageNo" value="<%=pageNo%>">
 	</form>
 	<%@include file="Footer.jsp"%>
 

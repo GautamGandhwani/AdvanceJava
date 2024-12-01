@@ -10,25 +10,23 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import co.in.Bean.UserBean;
-import co.in.Model.UserModel;
+import co.in.Bean.StudentBean;
+import co.in.Model.StudentModel;
 
-@WebServlet("/UserCtl.do")
-public class UserCtl extends HttpServlet {
+@WebServlet("/StudentCtl.do")
+public class StudentCtl extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
 		String id = request.getParameter("id");
-
 		System.out.println("Id = " + id);
 
-		UserModel model = new UserModel();
-		UserBean bean = new UserBean();
+		StudentBean bean = new StudentBean();
+		StudentModel model = new StudentModel();
 
 		if (id != null) {
-
 			try {
 				bean = model.findById(Integer.parseInt(id));
 				request.setAttribute("bean", bean);
@@ -36,8 +34,7 @@ public class UserCtl extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
-
-		RequestDispatcher rd = request.getRequestDispatcher("UserView.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("StudentView.jsp");
 		rd.forward(request, response);
 	}
 
@@ -45,47 +42,49 @@ public class UserCtl extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		String op = request.getParameter("operation");
-
-		System.out.println("Operatin = " + op);
-
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
-		UserBean bean = new UserBean();
-		UserModel model = new UserModel();
+		String op = request.getParameter("operation");
+		System.out.println("Operation = " + op);
+
+		StudentBean bean = new StudentBean();
+		StudentModel model = new StudentModel();
 
 		String firstName = request.getParameter("firstName");
 		String lastName = request.getParameter("lastName");
-		String loginId = request.getParameter("loginId");
-		String passWord = request.getParameter("passWord");
-		String address = request.getParameter("address");
+		String collageName = request.getParameter("collageName");
+		String email = request.getParameter("email");
+		String mobileNo = request.getParameter("mobileNo");
 		String dob = request.getParameter("dob");
 
 		try {
 			bean.setFirstName(firstName);
 			bean.setLastName(lastName);
-			bean.setLoginId(loginId);
-			bean.setPassWord(passWord);
-			bean.setAddress(address);
+			bean.setCollageName(collageName);
+			bean.setEmail(email);
+			bean.setMobileNo(mobileNo);
 			bean.setDob(sdf.parse(dob));
 
-			if (op.equals("save")) {
+			if (model.findByEmail(email) != null) {
+				request.setAttribute("msg", "Email Already Exist...");
+			} else if (op.equals("save")) {
 
 				model.add(bean);
 				request.setAttribute("bean", bean);
-				request.setAttribute("msg", "User Added Successfully");
+				request.setAttribute("msg", "Data Add Successfully");
+			}
 
-			} else if (op.equals("update")) {
+			if (op.equals("update")) {
 
 				bean.setId(Integer.parseInt(request.getParameter("id")));
-				request.setAttribute("bean", bean);
 				model.update(bean);
-				request.setAttribute("msg", "User Updateed Successfully");
+				request.setAttribute("bean", bean);
+				request.setAttribute("msg", "Data Update Successfully");
 			}
-			RequestDispatcher rd = request.getRequestDispatcher("UserView.jsp");
-			rd.forward(request, response);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		RequestDispatcher rd = request.getRequestDispatcher("StudentView.jsp");
+		rd.forward(request, response);
 	}
 }
